@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.2.3
+
+- **The daemon now comes up on its own.** DSH only starts it while a session retains
+  or recalls memories, so after a desktop restart the panel used to open on a stopped
+  backend. The host half starts it 15s after load, and the panel kicks the same path on
+  first open (one shared start, never two).
+- The badge shows `daemon 启动中` while that happens, and a failed auto-start says why
+  instead of leaving the panel looking broken.
+- New `POST /api/dsh-hindsight-panel/ensure-daemon` exposes the same idempotent
+  start-and-wait for anything else that needs it.
+
 ## 0.2.2
 
 - **Restart diagnostics no longer contradict the live status.** The status badge now reads
