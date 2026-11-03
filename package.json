@@ -6,11 +6,11 @@
   "author": "dsh-hindsight-panel contributors",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/your-name/dsh-hindsight-panel.git"
+    "url": "git+https://github.com/akamuyyds/dsh-hindsight-panel.git"
   },
-  "homepage": "https://github.com/your-name/dsh-hindsight-panel#readme",
+  "homepage": "https://github.com/akamuyyds/dsh-hindsight-panel#readme",
   "bugs": {
-    "url": "https://github.com/your-name/dsh-hindsight-panel/issues"
+    "url": "https://github.com/akamuyyds/dsh-hindsight-panel/issues"
   },
   "type": "module",
   "main": "lib/index.js",

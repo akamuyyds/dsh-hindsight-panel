@@ -1,5 +1,7 @@
 # dsh-hindsight-panel
 
+[![CI](https://github.com/akamuyyds/dsh-hindsight-panel/actions/workflows/ci.yml/badge.svg)](https://github.com/akamuyyds/dsh-hindsight-panel/actions/workflows/ci.yml)
+
 A sidebar panel for [DeepSeek Harness](https://github.com/deepseek-ai/dsh) that puts
 [Hindsight](https://github.com/vectorize-io/hindsight) memory in one place — and lets you
 change which model Hindsight itself uses, without editing env files by hand.
@@ -37,7 +39,7 @@ The plugin has no build step: clone it, then point the Harness plugin manager at
 folder.
 
 ```bash
-git clone https://github.com/<owner>/dsh-hindsight-panel.git ~/dsh-plugins/dsh-hindsight-panel
+git clone https://github.com/akamuyyds/dsh-hindsight-panel.git ~/dsh-plugins/dsh-hindsight-panel
 ```
 
 Then in the Harness Web UI:

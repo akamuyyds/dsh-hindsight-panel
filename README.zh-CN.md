@@ -1,5 +1,7 @@
 # dsh-hindsight-panel
 
+[![CI](https://github.com/akamuyyds/dsh-hindsight-panel/actions/workflows/ci.yml/badge.svg)](https://github.com/akamuyyds/dsh-hindsight-panel/actions/workflows/ci.yml)
+
 给 [DeepSeek Harness](https://github.com/deepseek-ai/dsh) 用的侧边栏面板，把
 [Hindsight](https://github.com/vectorize-io/hindsight) 记忆集中到一处 —— 并且可以直接
 切换 Hindsight 自己用的模型，不用手改 env 文件。
@@ -34,7 +36,7 @@ env 文件（`~/.hindsight/profiles/<profile>.env`）。API Key 只以掩码形�
 插件没有构建步骤：克隆下来，让 Harness 的插件管理器指向这个目录即可。
 
 ```bash
-git clone https://github.com/<owner>/dsh-hindsight-panel.git ~/dsh-plugins/dsh-hindsight-panel
+git clone https://github.com/akamuyyds/dsh-hindsight-panel.git ~/dsh-plugins/dsh-hindsight-panel
 ```
 
 然后打开 Harness Web UI：
