@@ -127,7 +127,7 @@ node --check lib/index.js lib/client.js lib/env-config.js
 ```
 
 重载方式：改宿主代码 → 在 *设置 → 插件* 里禁用/启用插件；改 `lib/client.js` → 刷新页面。
-宿主报错看 `~/.dsh/logs/**/plugin.log`。
+宿主报错见 Harness 的日志输出。
 
 | 路径 | 用途 |
 | --- | --- |

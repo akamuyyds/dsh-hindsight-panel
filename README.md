@@ -138,7 +138,7 @@ node --check lib/index.js lib/client.js lib/env-config.js
 ```
 
 Reload loop: edit host files → disable/enable the plugin in *Settings → Plugins*; edit
-`lib/client.js` → refresh the page. Watch `~/.dsh/logs/**/plugin.log` for host errors.
+`lib/client.js` → refresh the page. Host errors surface in the Harness log output.
 
 | Path | Purpose |
 | --- | --- |
