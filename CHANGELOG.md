@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.2.5
+
+- **One-step install.** Every release carries `dsh-hindsight-panel.tgz`, so the plugin
+  page installs the panel from
+  `https://github.com/akamuyyds/dsh-hindsight-panel/releases/latest/download/dsh-hindsight-panel.tgz`
+  without cloning the repository. The release workflow attaches that tarball
+  automatically, under a stable file name that never changes between versions.
+- README (中文 / English) now leads with that path and keeps the source checkout only
+  for development.
+
 ## 0.2.4
 
 - **Auto-start is now a setting, not a hard-coded behaviour.** The *About* tab has a

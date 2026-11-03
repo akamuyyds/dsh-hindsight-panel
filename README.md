@@ -33,7 +33,26 @@ env 文件（`~/.hindsight/profiles/<profile>.env`）。API Key 只以掩码形�
 
 ## 安装
 
-插件没有构建步骤：克隆下来，让 Harness 的插件管理器指向这个目录即可。
+插件没有构建步骤，两种装法任选。
+
+### 一键安装（推荐）
+
+把压缩包地址交给 Harness 的插件管理器就行，不用 git、不用构建：
+
+1. 侧边栏点 **插件** → **添加插件**（按钮旁的箭头里还有「安装第三方插件」）。
+2. 粘贴这个地址：
+
+   ```
+   https://github.com/akamuyyds/dsh-hindsight-panel/releases/latest/download/dsh-hindsight-panel.tgz
+   ```
+
+3. 点 **安装**，等它下载并启用，侧边栏出现脑图图标就能用。
+
+`releases/latest/download/...` 始终指向最新版本，可以收藏。升级时先在插件页卸载旧版，再用同一地址装一次。
+
+### 从源码安装（还在改代码时用）
+
+克隆下来，让 Harness 的插件管理器指向这个目录即可。
 
 ```bash
 git clone https://github.com/akamuyyds/dsh-hindsight-panel.git ~/dsh-plugins/dsh-hindsight-panel

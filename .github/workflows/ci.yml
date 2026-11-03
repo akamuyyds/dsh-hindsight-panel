@@ -4,6 +4,11 @@ on:
   push:
     branches: [main]
   pull_request:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
 
 jobs:
   test:
@@ -17,3 +22,22 @@ jobs:
         run: node --check lib/index.js lib/client.js lib/env-config.js
       - name: Unit tests
         run: npm test
+
+  attach-package:
+    # Every release carries the installable tarball under a stable name, so the
+    # one-step install URL never changes between versions.
+    if: github.event_name == 'release'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Pack
+        run: |
+          npm pack
+          mv dsh-hindsight-panel-*.tgz dsh-hindsight-panel.tgz
+      - name: Attach the package to the release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dsh-hindsight-panel.tgz

@@ -35,8 +35,30 @@ leaves the machine; API keys are only ever rendered masked.
 
 ## Install
 
-The plugin has no build step: clone it, then point the Harness plugin manager at the
-folder.
+The plugin has no build step. Pick one of two installs.
+
+### One-step install (recommended)
+
+Hand the tarball URL to the Harness plugin manager — no git, no build:
+
+1. Open **Plugins** from the sidebar and press **Add plugin** (the arrow next to the
+   button also offers *Install a third-party plugin*).
+2. Paste this URL:
+
+   ```
+   https://github.com/akamuyyds/dsh-hindsight-panel/releases/latest/download/dsh-hindsight-panel.tgz
+   ```
+
+3. Press **Install** and wait for it to download and enable. The brain icon appears in
+   the sidebar when it is ready.
+
+`releases/latest/download/...` always resolves to the newest release, so the URL stays
+valid. To upgrade, remove the installed copy in the plugin page and install the same
+URL again.
+
+### Install from source (when you edit the code)
+
+Clone the repository and point the plugin manager at the folder.
 
 ```bash
 git clone https://github.com/akamuyyds/dsh-hindsight-panel.git ~/dsh-plugins/dsh-hindsight-panel
