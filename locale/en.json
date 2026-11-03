@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Hindsight Memory",
+    "description": "Switch the LLM provider and model that Hindsight uses for memory extraction, and browse the memories, documents and observations it has stored."
+  }
+}

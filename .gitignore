@@ -1,0 +1,6 @@
+node_modules/
+*.log
+*.tgz
+.DS_Store
+.hindsight-panel-backup.json
+*.bak

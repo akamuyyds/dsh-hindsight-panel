@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="hsp-bg" x1="8" y1="6" x2="56" y2="58" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6C8CFF"/>
+      <stop offset="1" stop-color="#9B6CFF"/>
+    </linearGradient>
+  </defs>
+  <rect x="2" y="2" width="60" height="60" rx="15" fill="url(#hsp-bg)" opacity="0.14"/>
+  <g stroke="url(#hsp-bg)" stroke-width="2.4" stroke-linecap="round" opacity="0.7">
+    <path d="M32 17.5 19.5 31"/>
+    <path d="M32 17.5 44.5 31"/>
+    <path d="M19.5 31h25"/>
+    <path d="M32 17.5v29"/>
+  </g>
+  <circle cx="32" cy="17.5" r="6.2" fill="url(#hsp-bg)"/>
+  <circle cx="19.5" cy="31" r="5" fill="#8F7CFF"/>
+  <circle cx="44.5" cy="31" r="5" fill="#8F7CFF"/>
+  <circle cx="32" cy="46.5" r="5.6" fill="#6C5CE7"/>
+</svg>

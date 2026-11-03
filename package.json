@@ -1,0 +1,60 @@
+{
+  "name": "dsh-hindsight-panel",
+  "version": "0.2.0",
+  "description": "DeepSeek Harness sidebar panel for Hindsight: switch the memory plugin's LLM provider/model and browse what it remembers.",
+  "license": "MIT",
+  "author": "dsh-hindsight-panel contributors",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/your-name/dsh-hindsight-panel.git"
+  },
+  "homepage": "https://github.com/your-name/dsh-hindsight-panel#readme",
+  "bugs": {
+    "url": "https://github.com/your-name/dsh-hindsight-panel/issues"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "files": [
+    "lib",
+    "locale",
+    "icon.svg",
+    "cordis.patch.yml",
+    "README.md",
+    "README.zh-CN.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "hindsight",
+    "memory",
+    "sidebar"
+  ],
+  "engines": {
+    "node": "^22.19.0 || >=24.0.0"
+  },
+  "scripts": {
+    "test": "node --test"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "inject": [
+        "@deepseek-ai/dsh-client-locale",
+        "@deepseek-ai/dsh-client-ui-sidebar"
+      ],
+      "platform": "web"
+    }
+  }
+}
