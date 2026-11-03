@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.2.4
+
+- **Auto-start is now a setting, not a hard-coded behaviour.** The *About* tab has a
+  "插件设置" card with a switch for starting the daemon on load and a 0–300s delay.
+- Preferences persist to `~/.hindsight/dsh-hindsight-panel.json` (mode 0600), separate
+  from the Hindsight profile env so the model form and the panel settings never
+  overwrite each other.
+- `GET/POST /api/dsh-hindsight-panel/settings` expose the same values; saving with the
+  switch on starts a stopped daemon right away.
+
 ## 0.2.3
 
 - **The daemon now comes up on its own.** DSH only starts it while a session retains
