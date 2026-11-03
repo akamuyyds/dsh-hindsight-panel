@@ -2,159 +2,148 @@
 
 [![CI](https://github.com/akamuyyds/dsh-hindsight-panel/actions/workflows/ci.yml/badge.svg)](https://github.com/akamuyyds/dsh-hindsight-panel/actions/workflows/ci.yml)
 
-A sidebar panel for [DeepSeek Harness](https://github.com/deepseek-ai/dsh) that puts
-[Hindsight](https://github.com/vectorize-io/hindsight) memory in one place — and lets you
-change which model Hindsight itself uses, without editing env files by hand.
+给 [DeepSeek Harness](https://github.com/deepseek-ai/dsh) 用的侧边栏面板，把
+[Hindsight](https://github.com/vectorize-io/hindsight) 记忆集中到一处 —— 并且可以直接
+切换 Hindsight 自己用的模型，不用手改 env 文件。
 
 | | |
 | --- | --- |
-| **Switch the model Hindsight uses** | Pick a provider, model, base URL, API key and reasoning effort, then save — and optionally restart the local Hindsight daemon so the change takes effect. A one-click rollback restores the previous settings. |
-| **Reuse what DSH already configured** | Providers and models declared in your Harness profile (for example `opencode-go` or `deepseek-official`) are listed as-is. The API key is resolved from DSH's credential store inside the harness process, so it never reaches the browser and never has to be typed twice. |
-| **See what it remembers** | Memories, documents, observations, LLM call statistics and knowledge pages for the current bank, with keyword search, semantic recall and memory-composition charts. |
-| **Uninstall from the panel** | The About tab removes the bundle through the Harness plugin manager and reloads the page. Your Hindsight data and configuration are left alone. |
+| **切换 Hindsight 用的模型** | 选 provider、模型、base URL、API Key 与 reasoning effort，保存后可顺手重启本地 Hindsight daemon 让改动生效；一键回滚可恢复上一次的配置。 |
+| **复用 DSH 已配置好的模型** | Harness profile 里声明过的 provider/模型（例如 `opencode-go`、`deepseek-official`）会原样列出。API Key 由宿主进程从 DSH 凭据库解析，不进浏览器、也不用重复填写。 |
+| **看它记住了什么** | 当前 bank 的记忆、文档、观察、LLM 调用统计与知识页，支持关键词搜索、语义召回、记忆构成图。 |
+| **面板内一键卸载** | 关于页通过 Harness 插件管理器移除 bundle 并刷新页面，不会动你的记忆数据和 Hindsight 配置。 |
 
-Everything runs locally. The plugin proxies the Hindsight REST API on `127.0.0.1:9077`
-and rewrites the daemon profile env file (`~/.hindsight/profiles/<profile>.env`). No data
-leaves the machine; API keys are only ever rendered masked.
+全部本地运行：插件代理 `127.0.0.1:9077` 的 Hindsight REST API，并读写 daemon profile 的
+env 文件（`~/.hindsight/profiles/<profile>.env`）。API Key 只以掩码形式展示。
 
-## Requirements
+## 环境要求
 
-1. **DeepSeek Harness** with a desktop/web profile (the Web UI, not CLI-only).
-2. **Hindsight coding agent** installed and running in daemon mode —
-   `@vectorize-io/hindsight-coding-agents` from the Harness plugin marketplace, or
-   `HINDSIGHT_API_PORT` reachable at `127.0.0.1:9077`. Check with:
+1. **DeepSeek Harness**，且是桌面/Web profile（只跑 CLI 不行）。
+2. **Hindsight coding agent** 已安装并以 daemon 模式运行 —— 市场里的
+   `@vectorize-io/hindsight-coding-agents`，daemon 在 `127.0.0.1:9077`。检查：
 
    ```bash
    curl http://127.0.0.1:9077/health
    # {"status":"healthy","database":"connected", ...}
    ```
 
-3. **`uvx`** on `PATH` — only needed for *Save & restart* and *Rollback*. Set
-   `HINDSIGHT_UVX` to an absolute path if `uvx` lives outside `PATH`.
-4. **Node.js 22.19+ / 24+** — only for the unit tests, not to run the plugin.
+3. **`uvx`** 在 `PATH` 上 —— 只有「保存并重启」「回滚」需要。不在 `PATH` 就用环境变量
+   `HINDSIGHT_UVX` 指定绝对路径。
+4. **Node.js 22.19+ / 24+** —— 只用于跑单元测试，运行插件不需要。
 
-## Install
+## 安装
 
-The plugin has no build step: clone it, then point the Harness plugin manager at the
-folder.
+插件没有构建步骤：克隆下来，让 Harness 的插件管理器指向这个目录即可。
 
 ```bash
 git clone https://github.com/akamuyyds/dsh-hindsight-panel.git ~/dsh-plugins/dsh-hindsight-panel
 ```
 
-Then in the Harness Web UI:
+然后打开 Harness Web UI：
 
-1. Open **Plugins** from the sidebar and press **Add plugin** (the arrow next to the
-   button also offers *Install a third-party plugin*).
-2. Pick the **local folder** option and enter the absolute path of the cloned folder —
-   for example `D:\dsh-plugins\dsh-hindsight-panel`. Use a real path, not `~`.
-3. The bundle is listed as **Hindsight Memory** and applies immediately.
-4. Click the new brain icon in the left sidebar. The panel opens in the main area.
+1. 侧边栏点 **插件**，按 **添加插件**（按钮旁的箭头里还有「安装第三方插件」）。
+2. 选 **本地目录**，填克隆目录的绝对路径，例如 `D:\dsh-plugins\dsh-hindsight-panel`
+   （要填真实路径，不要用 `~`）。
+3. 列表里出现 **Hindsight 记忆**，立即生效。
+4. 点侧边栏新出现的脑图图标，面板在主区域打开。
 
-> The folder must stay where you installed it from: the bundle is installed as a
-> `link:` dependency. Moving or deleting it breaks the plugin until you install it again.
+> 目录要留在安装时所在的位置：bundle 是以 `link:` 依赖安装的，移动或删除目录会让
+> 插件失效，需要重新安装。
 
-## First run
+## 第一次打开
 
-Open the panel and check the **Model** tab:
+打开面板的「模型」页检查：
 
-- **Daemon** should say *healthy* and show the detected version (for example `v1.1.0`).
-- **Current model** shows what the daemon is using right now, read from the profile env
-  file (`HINDSIGHT_API_LLM_PROVIDER` / `_MODEL`), with the API key masked.
-- Press **Test connection** to make a real extraction call through Hindsight
-  (`dry-run-extract`). A successful answer proves the configured provider, model and key
-  all work end to end.
+- **Daemon** 显示 *healthy* 与检测到的版本（例如 `v1.1.0`）。
+- **当前模型** 显示 daemon 现在实际使用的 provider/model（读自 profile env），Key 掩码。
+- 点 **测试连接** 会触发一次真实的 Hindsight 抽取调用（`dry-run-extract`），能拿到
+  facts 就说明 provider、模型、Key 整条链路都通。
 
-## Use
+## 使用
 
-### Model tab
+### 模型页
 
-- **From DSH local config** — choose one of the providers your Harness profile declares.
-  Its models and its credential (`OPENCODE_GO_API_KEY`, `DEEPSEEK_API_KEY`, …) are
-  detected automatically; the key field shows *auto: `<credential name>`*.
-- **Manual configuration** — pick one of Hindsight's built-in providers, or type any
-  provider name with a custom base URL (OpenAI-compatible).
-- **Save** writes the profile env file in place, keeping comments and every unrelated
-  line intact. **Save & restart** also runs
-  `uvx hindsight-embed@latest daemon --profile <profile> stop|start` and waits for
-  `/health` to report `healthy` + `database: connected`. Expect 1–2 minutes: the daemon
-  verifies the model connection and loads its local embedding models.
-- **Rollback** restores the previous LLM settings from
-  `~/.hindsight/profiles/<profile>.env.hindsight-panel-backup.json` and restarts.
-- **Reasoning effort** is only written when set; `none` is valid for providers that do
-  not support it.
+- **从 DSH 本地配置导入** —— 选 Harness profile 里声明过的 provider，模型列表和凭据
+  （`OPENCODE_GO_API_KEY`、`DEEPSEEK_API_KEY` 等）自动探测；Key 输入框会提示
+  *自动：`<凭据名>`*。
+- **手动配置** —— 选 Hindsight 内置的 provider，或自己填 provider 名 + base URL
+  （OpenAI 兼容）。
+- **保存** 原位改写 profile env 文件，保留注释与所有无关行。**保存并重启** 还会执行
+  `uvx hindsight-embed@latest daemon --profile <profile> stop|start`，并等到 `/health`
+  返回 `healthy` + `database: connected`。大约 1–2 分钟：daemon 要验证模型连接并加载
+  本地 embedding 模型。
+- **回滚** 从 `~/.hindsight/profiles/<profile>.env.hindsight-panel-backup.json` 恢复
+  上一次的 LLM 配置并重启。
+- **Reasoning effort** 只在填写时写入；不支持该参数的 provider 写 `none` 也安全。
 
-### Memory tab
+### 记忆页
 
-Bank selector (usually `coding-agent::<repo>`), four stat cards, a composition donut and
-a 30-day activity sparkline, then tabs for:
+bank 选择器（通常是 `coding-agent::<repo>`）、4 个统计卡、构成甜甜圈图与 30 天活跃度
+曲线，下面是子标签：
 
-- **Memories** — filter by fact type, keyword search (`/memories/list?q=`), or semantic
-  recall (`/memories/recall` with reranker scores).
-- **Documents**, **Observations**, **LLM calls** (provider, model, tokens, duration) and
-  **Knowledge pages** (empty state when the bank has none).
+- **记忆** —— 按 fact 类型过滤、关键词搜索（`/memories/list?q=`）或语义召回
+  （`/memories/recall`，带 reranker 分数）。
+- **文档**、**观察**、**LLM 调用**（provider、模型、token、耗时）、**知识页**（bank
+  没有知识页时显示空状态）。
 
-### Uninstall
+### 卸载
 
-**About → Uninstall** calls the Harness plugin manager, removes the bundle and reloads
-the page. Removing **Hindsight Memory** from *Settings → Plugins* does the same. Neither
-deletes your memories or touches `~/.hindsight`.
+**关于 → 卸载** 调用 Harness 插件管理器移除 bundle 并刷新页面；在 *设置 → 插件* 里
+移除 **Hindsight 记忆** 效果相同。两者都不会删除记忆数据，也不会改 `~/.hindsight`。
 
-## How the model switch works
+## 模型切换的原理
 
-Hindsight reads its LLM configuration when the daemon starts, so a model change is
-`edit env → restart daemon`. The panel does exactly that:
+Hindsight 在 daemon 启动时读取 LLM 配置，所以「换模型 = 改 env → 重启 daemon」。面板做的
+就是这件事：
 
-1. Rewrites only the relevant keys in place (`HINDSIGHT_API_LLM_PROVIDER`,
-   `_MODEL`, `_API_KEY`, `_BASE_URL`, `_REASONING_EFFORT`, `HINDSIGHT_API_PORT`).
-   Commented template lines stay commented; the file format is untouched.
-2. Stores the previous LLM block in `.hindsight-panel-backup.json` for rollback.
-3. Stops and starts the daemon with `uvx`, treats "the daemon is no longer answering
-   `/health`" as a successful stop (the Windows stop command exits non-zero even when it
-   works), then polls `/health` until the daemon is ready.
+1. 只原位改写相关键（`HINDSIGHT_API_LLM_PROVIDER`、`_MODEL`、`_API_KEY`、`_BASE_URL`、
+   `_REASONING_EFFORT`、`HINDSIGHT_API_PORT`）。模板注释保持注释，文件格式不变。
+2. 把上一版 LLM 配置写进 `.hindsight-panel-backup.json`，供回滚使用。
+3. 用 `uvx` 停止并启动 daemon；把「`/health` 已不再应答」视为停止成功（Windows 上
+   停止命令即使生效也会返回非 0），随后轮询 `/health` 直到就绪。
 
-A failed restart keeps the log tail in the panel and leaves the previous env values in
-the backup, so the next start uses the last known-good configuration.
+重启失败时面板会显示日志尾部，env 里仍保留上一版可用的值，重新启动会回到最后一次
+已知可用的配置。
 
-## Troubleshooting
+## 常见问题
 
-| Symptom | Fix |
+| 现象 | 处理 |
 | --- | --- |
-| Panel route returns 403 | The plugin checks the `x-dsh-hindsight-panel: 1` header and same-origin `Origin`. Call it from the panel, not from another site. |
-| `daemon: unreachable` in the panel | Start Hindsight: `uvx hindsight-embed@latest daemon --profile coding-agent start`. If you use another profile, set it in `~/.hindsight/coding-agent.json` (`daemonProfile`). |
-| Restart fails at `stop` | Expected on Windows: the stop command exits non-zero after killing the process. The panel already treats a non-responding daemon as stopped. If the daemon stays healthy, the error text comes from the log. |
-| Restart fails at `ready` | Check the log tail shown in the panel and `~/.hindsight/profiles/<profile>.log`. Usually a wrong base URL, a rejected key, or no network. |
-| Sidebar icon missing after an update | Host-side code changes are not hot-reloaded: disable and re-enable **Hindsight Memory** in *Settings → Plugins*, then refresh the page. |
-| Key field looks empty | An empty password box means "keep the stored key". Use **Clear stored key** if you really want to remove it. |
-| Ports | Daemon API defaults to `9077`; the panel's routes live under `/api/dsh-hindsight-panel/*` on the Harness web server. |
+| 接口返回 403 | 插件校验 `x-dsh-hindsight-panel: 1` 请求头与同源 `Origin`，只能从面板调用，别从第三方页面调。 |
+| 面板显示 `daemon: unreachable` | 启动 Hindsight：`uvx hindsight-embed@latest daemon --profile coding-agent start`。用了别的 profile 就在 `~/.hindsight/coding-agent.json` 里设 `daemonProfile`。 |
+| 重启卡在 `stop` | Windows 上是正常现象：停止命令杀掉进程后仍返回非 0。面板已把「daemon 不再应答」当作停止成功；若它仍 healthy，错误信息会来自日志。 |
+| 重启卡在 `ready` | 看面板里的日志尾部与 `~/.hindsight/profiles/<profile>.log`，多半是 base URL 写错、Key 被拒或没有网络。 |
+| 更新后侧边栏图标不见了 | 宿主代码不会热重载：在 *设置 → 插件* 里把 **Hindsight 记忆** 禁用再启用，然后刷新页面。 |
+| Key 输入框看起来是空的 | 空密码框表示「保留已存的 Key」。真要删除请用「清除已存 Key」。 |
+| 端口 | daemon API 默认 `9077`；面板路由在 Harness Web 服务器的 `/api/dsh-hindsight-panel/*` 下。 |
 
-## Development
+## 开发
 
-No build step. The host half is a plain Cordis plugin (`lib/index.js`); the browser half
-is a hand-written `window.__ModuleLoader__.load({ id, factory })` module
-(`lib/client.js`). The plugin title and description come from `locale/*.json`.
+没有构建步骤。宿主半边是普通 Cordis 插件（`lib/index.js`）；浏览器半边是手写的
+`window.__ModuleLoader__.load({ id, factory })` 模块（`lib/client.js`）。插件标题和描述来自
+`locale/*.json`。
 
 ```bash
-npm test        # env-file editor unit tests (node --test)
+npm test        # env 文件编辑器单元测试（node --test）
 node --check lib/index.js lib/client.js lib/env-config.js
 ```
 
-Reload loop: edit host files → disable/enable the plugin in *Settings → Plugins*; edit
-`lib/client.js` → refresh the page. Host errors surface in the Harness log output.
+重载方式：改宿主代码 → 在 *设置 → 插件* 里禁用/启用插件；改 `lib/client.js` → 刷新页面。
+宿主报错见 Harness 的日志输出。
 
-| Path | Purpose |
+| 路径 | 用途 |
 | --- | --- |
-| `lib/index.js` | Host half: HTTP routes, Hindsight API proxy, env editing, restart state machine, local-provider discovery |
-| `lib/env-config.js` | Env parsing / masking / comment-preserving updates (pure functions) |
-| `lib/client.js` | Browser half: sidebar entry + main panel (Model / Memory / About) |
-| `cordis.patch.yml` | Bundle patch inserting the plugin row |
-| `locale/en.json`, `locale/zh.json` | Plugin manager title and description |
-| `test/env-config.test.mjs` | Unit tests |
+| `lib/index.js` | 宿主：HTTP 路由、Hindsight API 代理、env 编辑、重启状态机、本地 provider 探测 |
+| `lib/env-config.js` | env 解析 / 掩码 / 保留注释的改写（纯函数） |
+| `lib/client.js` | 浏览器：侧边栏入口 + 主面板（模型 / 记忆 / 关于） |
+| `cordis.patch.yml` | 插入插件行的 bundle patch |
+| `locale/en.json`, `locale/zh.json` | 插件管理器里的标题与描述 |
+| `test/env-config.test.mjs` | 单元测试 |
 
-## License
+## 许可
 
-MIT — see [LICENSE](LICENSE).
+MIT —— 见 [LICENSE](LICENSE)。
 
 ---
 
-中文说明见 [README.zh-CN.md](README.zh-CN.md)。
+英文文档见 [README.en.md](README.en.md)。

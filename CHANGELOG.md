@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.2.1
+
+- **Fixed the panel taking DSH down at startup.** Current DSH builds only allow a slot to
+  be registered after its owning entry has declared it, so both registrations now wait
+  inside `slots.inject` instead of running directly in `apply`.
+- `dsh.client.inject` now lists the client packages the sidebar and main area come from
+  (`dsh-client-ui-conversation`, `dsh-client-ui-workspace`, `dsh-typert-registry`,
+  `dsh-client-connection`), matching how shipped sidebar plugins declare themselves.
+- A client-half failure is reported instead of thrown: the reason is written to
+  `~/.hindsight/dsh-hindsight-panel-client-error.log` and shown as a small banner, so a
+  broken build can no longer block the whole window.
+- The Chinese README is now the main `README.md`; the English one moved to
+  `README.en.md`.
+
 ## 0.2.0
 
 - **Model tab reads DSH's own LLM configuration.** Providers and models declared in the

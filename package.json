@@ -1,6 +1,6 @@
 {
   "name": "dsh-hindsight-panel",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "DeepSeek Harness sidebar panel for Hindsight: switch the memory plugin's LLM provider/model and browse what it remembers.",
   "license": "MIT",
   "author": "dsh-hindsight-panel contributors",
@@ -27,7 +27,7 @@
     "icon.svg",
     "cordis.patch.yml",
     "README.md",
-    "README.zh-CN.md",
+    "README.en.md",
     "CHANGELOG.md",
     "LICENSE"
   ],
@@ -52,7 +52,11 @@
     "client": {
       "inject": [
         "@deepseek-ai/dsh-client-locale",
-        "@deepseek-ai/dsh-client-ui-sidebar"
+        "@deepseek-ai/dsh-client-ui-conversation",
+        "@deepseek-ai/dsh-client-ui-sidebar",
+        "@deepseek-ai/dsh-client-ui-workspace",
+        "@deepseek-ai/dsh-typert-registry",
+        "@deepseek-ai/dsh-client-connection"
       ],
       "platform": "web"
     }
