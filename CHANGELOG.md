@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.2.2
+
+- **Restart diagnostics no longer contradict the live status.** The status badge now reads
+  "restarting" while a restart runs and shows `daemon 运行中 · 上次重启失败` when the
+  daemon is healthy again but the last attempt is still recorded as failed.
+- The failure card explains that case in words instead of just dumping `start 退出码 1`,
+  and keeps the retry/rollback buttons available.
+- When `start` reports an error but another process is already bringing the daemon up
+  (a second window, or a start racing with the panel's own), the panel now waits up to
+  90s for `/health` instead of failing immediately on the exit code.
+
 ## 0.2.1
 
 - **Fixed the panel taking DSH down at startup.** Current DSH builds only allow a slot to
