@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.9
+
+- **No more stray console window when quitting.** The stop-on-exit helper spawned `uvx`
+  as a detached child; on Windows a detached console program is given its own console
+  window, which flashed on screen while the app was closing. The child is now attached
+  (and hidden) and merely `unref()`-ed, so nothing appears on screen.
+
 ## 0.2.8
 
 - **Stop on exit also covers a hard quit.** 0.2.7 relied on the plugin being disposed
