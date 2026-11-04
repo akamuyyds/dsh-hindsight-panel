@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.6
+
+- **Opening the panel no longer starts the daemon when auto-start is off.** The model tab
+  used to call `/ensure-daemon` whenever the panel opened and the daemon was down,
+  ignoring the auto-start switch. It now stays a read-only observer unless
+  "启动时自动启动 Hindsight daemon" is on, matching what the settings card promised.
+
 ## 0.2.5
 
 - **One-step install.** Every release carries `dsh-hindsight-panel.tgz`, so the plugin
