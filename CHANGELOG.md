@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.8
+
+- **Stop on exit also covers a hard quit.** 0.2.7 relied on the plugin being disposed
+  during a graceful shutdown. The host now also listens for the process `exit` event,
+  so an Electron main process that quits without disposing the loader still stops the
+  daemon when the setting is on.
+
 ## 0.2.7
 
 - **Optional stop on exit.** A new panel setting ("退出 DSH 时停止 Hindsight daemon",
