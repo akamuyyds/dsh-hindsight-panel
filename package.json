@@ -1,6 +1,6 @@
 {
   "name": "dsh-hindsight-panel",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "DeepSeek Harness sidebar panel for Hindsight: switch the memory plugin's LLM provider/model and browse what it remembers.",
   "license": "MIT",
   "author": "dsh-hindsight-panel contributors",

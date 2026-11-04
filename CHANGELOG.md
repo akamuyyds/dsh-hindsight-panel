@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.7
+
+- **Optional stop on exit.** A new panel setting ("退出 DSH 时停止 Hindsight daemon",
+  off by default) hands `hindsight-embed daemon stop` to a detached child when the host
+  plugin is disposed, so quitting the desktop app can finally stop a daemon that
+  otherwise outlives it. The next session still brings the daemon back through the
+  official plugin, at the cost of reloading the embedding and reranker models.
+
 ## 0.2.6
 
 - **Opening the panel no longer starts the daemon when auto-start is off.** The model tab
